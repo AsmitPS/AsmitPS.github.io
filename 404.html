@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Error 404 - Module Not Found</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #000;
+      overflow: hidden;
+      font-family: 'Courier New', Courier, monospace;
+    }
+    /* Matrix canvas styling */
+    #matrix {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+      background: #000;
+    }
+    /* Main content styling */
+    #content {
+      display: none;
+      position: relative;
+      z-index: 20;
+      width: 100%;
+      height: 100%;
+      background-color: #121212;
+      color: #e0e0e0;
+      text-align: center;
+      padding-top: 10%;
+      box-sizing: border-box;
+    }
+    #content h1 {
+      font-size: 6rem;
+      color: #ff5555;
+      margin-bottom: 20px;
+    }
+    #content p {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+    }
+    #content .code-block {
+      background: #1e1e1e;
+      border: 1px solid #333;
+      padding: 20px;
+      text-align: left;
+      font-size: 0.9rem;
+      margin: 20px auto;
+      max-width: 600px;
+      overflow-x: auto;
+    }
+    #content a {
+      color: #57aaff;
+      text-decoration: none;
+      border-bottom: 1px dashed #57aaff;
+    }
+    #content a:hover {
+      color: #ff5555;
+      border-bottom-color: #ff5555;
+    }
+    /* Blinker animation for technical effect */
+    .blinker {
+      animation: blink 1s steps(2, start) infinite;
+      color: #00ff00;
+      font-weight: bold;
+    }
+    @keyframes blink {
+      to { visibility: hidden; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Matrix canvas effect -->
+  <canvas id="matrix"></canvas>
+  
+  <!-- Main 404 content -->
+  <div id="content">
+    <h1>404</h1>
+    <p>
+      Error: <span class="blinker">MODULE_NOT_FOUND</span><br>
+      The requested resource is not available in the current build.<br>
+      Please verify your system configuration or return to the mainframe.
+    </p>
+    <div class="code-block">
+      <code>
+        // Attempting to load module...<br>
+        fetch('/api/endpoint')<br>
+        &nbsp;&nbsp;.then(response =&gt; {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;if (!response.ok) {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new Error('404: Not Found');<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;return response.json();<br>
+        &nbsp;&nbsp;})<br>
+        &nbsp;&nbsp;.catch(error =&gt; {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;console.error('System Error:', error);<br>
+        &nbsp;&nbsp;});
+      </code>
+    </div>
+    <p><a href="/">Return to Home</a></p>
+  </div>
+  
+  <script>
+    // Set up canvas for the Matrix effect
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()*&^%';
+    const fontSize = 16;
+    const columns = Math.floor(canvas.width / fontSize);
+    const drops = [];
+    
+    for (let i = 0; i < columns; i++) {
+      drops[i] = 1;
+    }
+    
+    function drawMatrix() {
+      // Translucent background to create trail effect
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#0F0';
+      ctx.font = fontSize + 'px monospace';
+      
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters.charAt(Math.floor(Math.random() * letters.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+    
+    const matrixInterval = setInterval(drawMatrix, 33);
+    
+    // Transition from Matrix effect to main 404 content after 3 seconds
+    setTimeout(() => {
+      clearInterval(matrixInterval);
+      let opacity = 1;
+      const fadeInterval = setInterval(() => {
+        opacity -= 0.05;
+        canvas.style.opacity = opacity;
+        if (opacity <= 0) {
+          clearInterval(fadeInterval);
+          canvas.style.display = 'none';
+          document.getElementById('content').style.display = 'block';
+        }
+      }, 50);
+    }, 3000);
+    
+    // Ensure the canvas adjusts if the window size changes
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
+</body>
+</html>
