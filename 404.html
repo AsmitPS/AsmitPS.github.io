@@ -5,11 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Error 404 - Module Not Found</title>
   <style>
-    /* General Reset */
+    /* Reset and Base Styles */
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { width: 100%; height: 100%; overflow: hidden; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #000;
+    }
     
-    /* Matrix Canvas as full background */
+    /* Matrix Canvas (Background) */
     #matrix {
       position: fixed;
       top: 0;
@@ -20,19 +25,17 @@
       background-color: #000;
     }
     
-    /* 404 Content styling */
+    /* 404 Content Overlay */
     #content {
       position: relative;
       z-index: 2;
       width: 100%;
       height: 100%;
-      background: rgba(18, 18, 18, 0.9);
+      background: rgba(18, 18, 18, 0.85); /* Slightly transparent to blend with the matrix */
       color: #e0e0e0;
       font-family: 'Courier New', Courier, monospace;
       text-align: center;
       padding-top: 10%;
-      opacity: 0;
-      transition: opacity 0.5s ease-in;
     }
     #content h1 {
       font-size: 6rem;
@@ -73,10 +76,10 @@
   </style>
 </head>
 <body>
-  <!-- Matrix effect canvas -->
+  <!-- Matrix Canvas as Background -->
   <canvas id="matrix"></canvas>
   
-  <!-- Main 404 content overlay -->
+  <!-- 404 Content Overlay -->
   <div id="content">
     <h1>404</h1>
     <p>
@@ -103,7 +106,7 @@
   </div>
   
   <script>
-    // --- Matrix Effect Configuration ---
+    // Set up the Matrix effect on the canvas
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
@@ -114,10 +117,9 @@
     const columns = Math.floor(canvas.width / fontSize);
     const drops = Array.from({ length: columns }, () => 1);
     
-    // Draw function: faster drops, increased speed by incrementing by 2 per iteration.
     function drawMatrix() {
-      // Fading background to create a trailing effect
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+      // Draw a semi-transparent black rectangle over the entire canvas
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = '#0F0';
       ctx.font = fontSize + 'px monospace';
@@ -125,35 +127,19 @@
       for (let i = 0; i < drops.length; i++) {
         const text = characters.charAt(Math.floor(Math.random() * characters.length));
         ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-        // Reset drop when it reaches the bottom, with a small chance to trigger earlier.
+        
+        // Reset drop when it goes off screen with a chance for randomness
         if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
           drops[i] = 0;
         }
-        drops[i] += 2; // Increase speed
+        drops[i] += 2; // Increase drop speed for a brisk effect
       }
     }
     
-    // Run the Matrix effect at a faster frame rate.
-    const matrixInterval = setInterval(drawMatrix, 20);
+    // Continuously run the Matrix effect
+    setInterval(drawMatrix, 20);
     
-    // --- Transition Timing ---
-    // Shorter display: After 1.5 seconds, start fade-out of the matrix canvas.
-    setTimeout(() => {
-      let fadeOpacity = 1;
-      const fadeTimer = setInterval(() => {
-        fadeOpacity -= 0.05;
-        canvas.style.opacity = fadeOpacity;
-        if (fadeOpacity <= 0) {
-          clearInterval(fadeTimer);
-          canvas.style.display = 'none';
-          // Reveal the main content
-          document.getElementById('content').style.opacity = 1;
-          clearInterval(matrixInterval);
-        }
-      }, 30);
-    }, 1500);
-    
-    // Adjust canvas size on window resize.
+    // Resize canvas on window resize
     window.addEventListener('resize', () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
