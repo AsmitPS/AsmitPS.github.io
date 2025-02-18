@@ -3,170 +3,160 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Error 404 - Technical Glitch</title>
+  <title>Error 404 - Module Not Found</title>
   <style>
-    /* Base resets and full-screen settings */
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      background-color: #000;
-      overflow: hidden;
-      font-family: 'Courier New', Courier, monospace;
-    }
-    /* Matrix canvas as background */
+    /* General Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; overflow: hidden; }
+    
+    /* Matrix Canvas as full background */
     #matrix {
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
+      width: 100%;
+      height: 100%;
       z-index: 1;
+      background-color: #000;
     }
-    /* Main technical 404 content */
+    
+    /* 404 Content styling */
     #content {
       position: relative;
       z-index: 2;
       width: 100%;
       height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      background: rgba(18, 18, 18, 0.9);
+      color: #e0e0e0;
+      font-family: 'Courier New', Courier, monospace;
       text-align: center;
-      background: rgba(18, 18, 18, 0.95);
-      padding: 20px;
-      box-sizing: border-box;
+      padding-top: 10%;
+      opacity: 0;
+      transition: opacity 0.5s ease-in;
     }
     #content h1 {
-      font-size: 8rem;
-      margin-bottom: 10px;
+      font-size: 6rem;
       color: #ff5555;
-    }
-    #content p {
-      font-size: 1.2rem;
       margin-bottom: 20px;
     }
-    /* Code block styling */
-    #content .code-block {
+    #content p {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+    }
+    .code-block {
       background: #1e1e1e;
       border: 1px solid #333;
       padding: 20px;
       text-align: left;
       font-size: 0.9rem;
       max-width: 600px;
-      margin: auto;
+      margin: 20px auto;
       overflow-x: auto;
     }
-    /* Blinking effect for technical cues */
-    .blinker {
-      color: #00ff00;
-      font-weight: bold;
-      animation: blink 0.8s steps(2, start) infinite;
-    }
-    @keyframes blink {
-      to { visibility: hidden; }
-    }
-    /* Return link styling */
-    #return {
-      margin-top: 20px;
-      font-size: 1.1rem;
-    }
-    #return a {
+    a {
       color: #57aaff;
       text-decoration: none;
       border-bottom: 1px dashed #57aaff;
     }
-    #return a:hover {
+    a:hover {
       color: #ff5555;
       border-bottom-color: #ff5555;
+    }
+    .blinker {
+      color: #00ff00;
+      font-weight: bold;
+      animation: blink 1s steps(2, start) infinite;
+    }
+    @keyframes blink {
+      to { visibility: hidden; }
     }
   </style>
 </head>
 <body>
-  <!-- Matrix Effect Canvas -->
+  <!-- Matrix effect canvas -->
   <canvas id="matrix"></canvas>
   
-  <!-- Technical 404 Content -->
+  <!-- Main 404 content overlay -->
   <div id="content">
     <h1>404</h1>
     <p>
       Error: <span class="blinker">MODULE_NOT_FOUND</span><br>
-      The requested module encountered a technical glitch.<br>
-      Please verify your system configuration or reinitialize the process.
+      The requested resource is not available in the current build.<br>
+      Please verify your system configuration or return to the mainframe.
     </p>
     <div class="code-block">
       <code>
-        // Initiating module load sequence...<br>
-        loadModule('/api/resource')<br>
-        &nbsp;&nbsp;.then(result => {<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;if (!result) {<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new Error('Error 404: Module missing');<br>
+        // Attempting to load module...<br>
+        fetch('/api/endpoint')<br>
+        &nbsp;&nbsp;.then(response =&gt; {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;if (!response.ok) {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new Error('404: Not Found');<br>
         &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;return response.json();<br>
         &nbsp;&nbsp;})<br>
-        &nbsp;&nbsp;.catch(error => {<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;console.error('System Debug:', error);<br>
+        &nbsp;&nbsp;.catch(error =&gt; {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;console.error('System Error:', error);<br>
         &nbsp;&nbsp;});
       </code>
     </div>
-    <div id="return">
-      <a href="/">> Return to Mainframe</a>
-    </div>
+    <p><a href="/">> return to mainframe</a></p>
   </div>
   
   <script>
-    // Set up canvas and context
+    // --- Matrix Effect Configuration ---
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
-    let width = canvas.width = window.innerWidth;
-    let height = canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
     
-    // Character set for the Matrix effect
-    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()';
-    const fontSize = 18;
-    const columns = Math.floor(width / fontSize);
-    const drops = Array(columns).fill(1);
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()';
+    const fontSize = 16;
+    const columns = Math.floor(canvas.width / fontSize);
+    const drops = Array.from({ length: columns }, () => 1);
     
-    // Draw the Matrix effect: faster drops and shorter display time
+    // Draw function: faster drops, increased speed by incrementing by 2 per iteration.
     function drawMatrix() {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.1)'; // trail effect
-      ctx.fillRect(0, 0, width, height);
-      
-      ctx.fillStyle = '#0F0'; // green characters
+      // Fading background to create a trailing effect
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#0F0';
       ctx.font = fontSize + 'px monospace';
       
       for (let i = 0; i < drops.length; i++) {
-        const text = letters.charAt(Math.floor(Math.random() * letters.length));
+        const text = characters.charAt(Math.floor(Math.random() * characters.length));
         ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-        
-        // Reset drop when it passes the bottom
-        if (drops[i] * fontSize > height && Math.random() > 0.975) {
+        // Reset drop when it reaches the bottom, with a small chance to trigger earlier.
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
           drops[i] = 0;
         }
-        drops[i] += 1.5; // increase drop speed for a faster effect
+        drops[i] += 2; // Increase speed
       }
     }
     
-    // Run the matrix effect with a faster frame rate
-    const matrixInterval = setInterval(drawMatrix, 20); // ~50 FPS
+    // Run the Matrix effect at a faster frame rate.
+    const matrixInterval = setInterval(drawMatrix, 20);
     
-    // After 1.5 seconds, fade out the Matrix effect over 0.5 seconds
+    // --- Transition Timing ---
+    // Shorter display: After 1.5 seconds, start fade-out of the matrix canvas.
     setTimeout(() => {
-      let opacity = 1;
-      const fadeInterval = setInterval(() => {
-        opacity -= 0.1;
-        canvas.style.opacity = opacity;
-        if (opacity <= 0) {
-          clearInterval(fadeInterval);
-          clearInterval(matrixInterval);
+      let fadeOpacity = 1;
+      const fadeTimer = setInterval(() => {
+        fadeOpacity -= 0.05;
+        canvas.style.opacity = fadeOpacity;
+        if (fadeOpacity <= 0) {
+          clearInterval(fadeTimer);
           canvas.style.display = 'none';
+          // Reveal the main content
+          document.getElementById('content').style.opacity = 1;
+          clearInterval(matrixInterval);
         }
-      }, 50);
+      }, 30);
     }, 1500);
     
-    // Adjust canvas size on window resize
+    // Adjust canvas size on window resize.
     window.addEventListener('resize', () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     });
   </script>
 </body>
