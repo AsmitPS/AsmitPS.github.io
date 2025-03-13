@@ -1,1 +1,240 @@
-'ello
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asmit Pranshu Singh | Unknown man from a never heard place</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Space+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2B414D;
+            --accent: #FF6B4A;
+            --text: #333333;
+            --paper: #FDF9F5;
+            --ink: #1A1A1A;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            color: var(--text);
+            background: var(--paper);
+            background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ff6b4a' fill-opacity='0.05' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 2rem;
+            align-items: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        header::after {
+            content: "";
+            position: absolute;
+            bottom: -2rem;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent) 50%, transparent 50%);
+            background-size: 20px 100%;
+        }
+
+        .profile-pic {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            border: 5px solid var(--primary);
+            box-shadow: 8px 8px 0 var(--accent);
+            transform: rotate(3deg);
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin: 0;
+            color: var(--ink);
+            line-height: 1.1;
+            font-weight: 700;
+        }
+
+        h1 span {
+            color: var(--accent);
+            font-weight: 300;
+        }
+
+        h2 {
+            font-family: 'Space Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--primary);
+            margin: 3rem 0 1.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        h2::before {
+            content: "▹";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1.5rem;
+            padding: 1rem 0;
+        }
+
+        .skill-category {
+            background: rgba(255,107,74,0.08);
+            padding: 1.5rem;
+            border-radius: 4px;
+        }
+
+        .skill-category h3 {
+            margin-top: 0;
+            color: var(--accent);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .skill-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .skill-list li {
+            margin: 0.5rem 0;
+            position: relative;
+            padding-left: 1.2rem;
+        }
+
+        .skill-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        .contact-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .contact-link {
+            background: white;
+            padding: 1.5rem;
+            text-align: center;
+            border: 2px solid var(--primary);
+            transition: all 0.2s ease;
+        }
+
+        .contact-link:hover {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        footer {
+            margin-top: 4rem;
+            padding: 2rem 0;
+            border-top: 3px solid var(--primary);
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        a {
+            color: var(--text);
+            text-decoration: none;
+            border-bottom: 2px solid var(--accent);
+            font-weight: 500;
+        }
+
+        a:hover {
+            color: var(--accent);
+        }
+
+        /* Personal touches */
+        .coffee-note {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="http://asmitps.github.io/pfp.jpg" alt="Asmit Pranshu Singh profile photo" class="profile-pic">
+            <div>
+                <h1>Asmit Pranshu Singh<span></span></h1>
+                <p></p>
+            </div>
+        </header>
+
+        <section id="about">
+            <h2>Hello There</h2>
+            <p>PREPARING FOR AGI TAKEOVER</p>
+            
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Daily Drivers</h3>
+                    <ul class="skill-list">
+                        <li>Python</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3>Currently Exploring</h3>
+                    <ul class="skill-list">
+                        <li>TypeScript</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="contact">
+            <h2>Let's Connect</h2>
+            <div class="contact-links">
+                <a href="mailto:asmitps@outlook.com" class="contact-link">
+                    📬 Email Me<br>
+                    <small>Usually reply in 24hrs</small>
+                </a>
+                <a href="https://github.com/AsmitPS" class="contact-link" target="_blank">
+                    🐙 GitHub<br>
+                    <small>Currently Inactive</small>
+                </a>
+                <a href="https://x.com/AsmitPS" class="contact-link" target="_blank">
+                    💬 X<br>
+                    <small>X > LinkedIn</small>
+                </a>
+            </div>
+
+        <footer>
+            <p>© 2025 Asmit Pranshu Singh • Handcrafted with HTML/CSS<br>
+            <small>Type set in Space Grotesk/Mono • Updated March 2025</small></p>
+        </footer>
+    </div>
+</body>
+</html>
+<!-- yes, this website is ai generated.. -->
